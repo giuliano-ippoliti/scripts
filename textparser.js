@@ -1,5 +1,6 @@
 const fs = require('fs');
 const readline = require('readline');
+const family = [];
 
 const infile = process.argv[2];
 
@@ -25,11 +26,18 @@ fs.access(infile, fs.F_OK, (err) => {
 	readInterface.on('line', function(line) {
 		const found = line.match(/^(\w+);\w+;(\d+)/);
 		if (found) {
-			prenom = found[1];
-			age = found[2];
-			console.log(`${prenom} - ${age}`);
+			var item = {};
+			item.prenom = found[1];
+			item.age = found[2];
+			family.push(item);
+			//console.log(item);
+			//console.log(family);
 		}
+	})
+	.on('close', function(line) {	// end of file
+		console.log(family);
 	});
+
 });
 
 
